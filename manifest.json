@@ -1,9 +1,9 @@
 {
 	"id": "obsidian-textbundle-plugin",
-	"name": "Textbundle",
+	"name": "TextBundle",
 	"version": "0.1.0",
 	"minAppVersion": "0.9.12",
-	"description": "Support for textbundle",
+	"description": "Supporting for TextBundle",
 	"author": "SettingDust",
 	"authorUrl": "https://github.com/SettingDust",
 	"isDesktopOnly": false
