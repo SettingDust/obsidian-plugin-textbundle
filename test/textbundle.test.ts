@@ -16,6 +16,7 @@ const imageName = 'mt_textformat_menu.png';
 describe('textbundle', function () {
   after(function () {
     removeSync("./assets")
+    removeSync("./output")
   });
 
   it('downloadFiles', function () {
