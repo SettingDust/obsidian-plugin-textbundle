@@ -7,7 +7,9 @@ import license from "rollup-plugin-license";
 import path from 'path';
 import copy from 'rollup-plugin-copy'
 import json from "@rollup/plugin-json";
-import sass from 'sass'
+import sass from "sass";
+import * as fs from "fs";
+import {promisify} from "util";
 
 const isProd = (process.env.BUILD === 'production');
 
@@ -57,7 +59,9 @@ export default {
             }).css.toString(),
           rename: (name) => `${name}.css`
         }
-      ]
+      ],
+      filter: (src) =>
+         promisify(fs.stat)(src).then(({size}) => size > 0)
     })
   ]
 } as RollupOptions

@@ -25,7 +25,7 @@
     "node-sass": "^6.0.1",
     "obsidian": "^0.12.16",
     "rollup": "^2.57.0",
-    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-copy": "git://github.com/SettingDust/rollup-plugin-copy#develop",
     "rollup-plugin-license": "^2.5.0",
     "rollup-plugin-terser": "^7.0.2",
     "sass": "^1.42.1",
