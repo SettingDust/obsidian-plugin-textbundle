@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "dev": "rollup --config rollup.config.ts --configPlugin typescript -w",
-    "build": "rollup --config rollup.config.ts --configPlugin typescript --environment BUILD:production"
+    "build": "rollup --config rollup.config.ts --configPlugin typescript --environment BUILD:production",
+    "test": "mocha test/*.test.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,15 +16,22 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@rollup/plugin-typescript": "^8.2.5",
+    "@types/chai": "^4.2.22",
+    "@types/mocha": "^9.0.0",
     "@types/node": "^16.9.6",
+    "chai": "^4.3.4",
+    "mocha": "^9.1.1",
     "obsidian": "^0.12.16",
     "rollup": "^2.57.0",
+    "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-license": "^2.5.0",
     "rollup-plugin-sass": "^1.2.8",
     "rollup-plugin-terser": "^7.0.2",
+    "ts-node": "^10.2.1",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },
   "dependencies": {
+    "nodejs-file-downloader": "git://github.com/SettingDust/nodejs-file-downloader"
   }
 }

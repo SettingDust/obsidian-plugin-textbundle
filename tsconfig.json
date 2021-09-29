@@ -3,19 +3,20 @@
     "baseUrl": ".",
     "inlineSourceMap": true,
     "inlineSources": true,
-    "module": "ESNext",
+    "module": "commonjs",
     "target": "es6",
     "allowJs": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "lib": [
       "dom",
       "es5",
       "scripthost",
       "es2015"
-    ],
-    "allowSyntheticDefaultImports": true
+    ]
   },
   "include": [
     "**/*.ts"
