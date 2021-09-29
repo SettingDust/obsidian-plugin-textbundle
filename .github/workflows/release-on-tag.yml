@@ -1,0 +1,31 @@
+on:
+  create:
+    tags:
+      - '*.*.*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 12.x, 14.x ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: c-hive/gha-yarn-cache@v2
+      - run: yarn
+      - run: yarn test
+      - run: yarn build
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          files: |
+            dist/main.js
+            dist/styles.css
+            dist/license.txt
+            dist/versions.json
+            dist/manifest.json
