@@ -5,9 +5,9 @@ import {RollupOptions} from 'rollup';
 import {terser} from "rollup-plugin-terser";
 import license from "rollup-plugin-license";
 import path from 'path';
-import sass from 'rollup-plugin-sass';
 import copy from 'rollup-plugin-copy'
 import json from "@rollup/plugin-json";
+import sass from 'sass'
 
 const isProd = (process.env.BUILD === 'production');
 
@@ -24,7 +24,8 @@ export default {
   external: ['obsidian'],
   plugins: [
     typescript({
-      tsconfig: "./tsconfig.app.json"
+      // FIXME Rollup warn that the module isn't esnext. But it should be
+      tsconfig: "tsconfig.app.json"
     }),
     nodeResolve({browser: true}),
     commonjs(),
@@ -32,7 +33,6 @@ export default {
     terser({
       format: {comments: false}
     }),
-    sass(),
     license({
       thirdParty: {
         includePrivate: true,
@@ -45,7 +45,18 @@ export default {
     copy({
       targets: [
         {src: 'manifest.json', dest: 'dist'},
-        {src: 'versions.json', dest: 'dist'}
+        {src: 'versions.json', dest: 'dist'},
+        {
+          src: 'styles.scss',
+          dest: 'dist',
+          transform: (contents) =>
+            sass.renderSync({
+              data: contents.toString(),
+              outputStyle: "compressed",
+              sourceMap: !isProd
+            }).css.toString(),
+          rename: (name) => `${name}.css`
+        }
       ]
     })
   ]
