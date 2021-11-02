@@ -1,6 +1,6 @@
 const regex = {
   image: /!\[(.*?)]\((.*?)\s?(".+")?\)/g,
-  imageUrl: /(!\[.*?]\().*?(\s?(?:".+")?\))/,
+  imageUrl: /(!\[.*?]\().*?(\s?(?:".*?")?\))/,
 }
 
 export interface Images {
@@ -21,17 +21,14 @@ export function extractImages(markdown: string) {
   })
 }
 
-export function replaceFirstAfter(input: string, searchValue: string | RegExp, replaceValue: string, index: number) {
-  return `${input.slice(0, index)}${input.slice(index).replace(searchValue, replaceValue)}`
-}
-
-function replaceImage(markdown: string, replaceValue: string, index: number) {
-  return replaceFirstAfter(markdown, regex.imageUrl, `$1${replaceValue}$2`, index)
-}
-
 export function replaceAllImages(markdown: string, replaceValues: { [key: string]: number }) {
   let temp = markdown
-  for (const [value, index] of Object.entries(replaceValues))
-    temp = replaceImage(temp, value, index)
+  let delta = 0
+  for (const [value, index] of Object.entries(replaceValues)) {
+    const currentIndex = index - delta
+    const result = regex.imageUrl.exec(temp.slice(currentIndex))
+    delta += result[0].length - result[1].length - result[2].length - value.length
+    temp = temp.slice(0, currentIndex) + temp.slice(currentIndex).replace(regex.imageUrl, `$1${value}$2`)
+  }
   return temp
 }

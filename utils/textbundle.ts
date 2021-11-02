@@ -1,6 +1,6 @@
 import {extractImages, replaceAllImages} from "./markdown-parse";
 import Downloader from "nodejs-file-downloader";
-import {writeFileSync} from "fs";
+import {mkdirSync, rmdirSync, rmSync, writeFileSync} from "fs";
 import {FileSystemAdapter, MarkdownView} from "obsidian";
 
 interface Options {
@@ -56,7 +56,12 @@ export async function textbundle(view: MarkdownView, options: Partial<Options> =
   const images = extractImages(content)
   const currentFile = view.file;
   const adapter = currentFile.vault.adapter as FileSystemAdapter
-  const currentDir = adapter.getFullPath(`${currentFile.parent.name}/${currentFile.basename}.textbundle`)
+  const currentDir = adapter.getFullPath(`${currentFile.parent.path}/${currentFile.basename}.textbundle`)
+  try {
+    rmSync(currentDir, {force: true, recursive: true})
+  } catch (ignored) {
+  }
+  mkdirSync(currentDir)
   const files = await Promise.all(downloadFiles(`${currentDir}/assets`, ...images.map(it => it.url)));
   const cleanedContent = await cleanImages(content, files.map(it => `assets/${it}`))
   writeFileSync(`${currentDir}/text.md`, cleanedContent)

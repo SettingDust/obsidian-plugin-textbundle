@@ -1,5 +1,5 @@
 import assert from "assert";
-import {extractImages, replaceAllImages, replaceFirstAfter} from "../utils/markdown-parse";
+import {extractImages, replaceAllImages} from "../utils/markdown-parse";
 
 const markdownString = `An [example](http://example.com).
 
@@ -26,9 +26,6 @@ describe('markdown', () => {
         title: '"icon"',
         alt: 'Image'
       }])
-  });
-  it('replaceFirstAfter', () => {
-    assert.equal(replaceFirstAfter('123123789', '123', "456", 3), '123456789')
   });
   it('replaceAllImages', () => {
     assert.equal(replaceAllImages(markdownString, {'asset\\1.png': 35}), replacedMarkdown)

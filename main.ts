@@ -13,8 +13,8 @@ export default class TextBundlePlugin extends Plugin {
 
   async onload() {
     this.addCommand({
-      id: 'convert-textbundle',
-      name: 'Convert to Textbundle',
+      id: 'to-textbundle',
+      name: 'To Textbundle',
       editorCallback: (editor, view) => {
         textbundle(view, {
           creatorURL: `obsidian://open?vault=${this.app.vault.getName()}`,
